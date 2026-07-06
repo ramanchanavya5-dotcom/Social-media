@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>My Profile</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+.profile{
+
+width:500px;
+margin:50px auto;
+background:rgb(177, 173, 182);
+padding:30px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,.2);
+text-align:center;
+
+}
+
+.profile img{
+
+width:150px;
+height:150px;
+border-radius:50%;
+object-fit:cover;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="profile">
+
+<img
+id="profileImage"
+src="https://i.pravatar.cc/150">
+
+<h2 id="profileName">
+
+Guest User
+
+</h2><br>
+
+<p id="profileEmail">
+
+No Email
+
+</p><br>
+<h3>
+
+Followers :
+<span id="followers">
+
+0
+
+</span>
+
+
+
+<button
+onclick="followUser()"
+style="background:#1877f2;
+color:white;
+border:none;
+padding:10px 20px;
+border-radius:6px;
+cursor:pointer;
+margin-top:10px;">
+
+Follow
+
+</button><br></h3>
+
+
+
+<h3>
+
+My Posts
+
+</h3><br>
+
+<a href="index.html">
+
+🏠 Home
+
+</a>
+<div id="myPosts">
+
+</div>
+
+</div>
+
+<script>
+
+const name =
+localStorage.getItem("username");
+
+const email =
+localStorage.getItem("email");
+
+document.getElementById("profileName").innerText =
+name || "Guest User";
+
+document.getElementById("profileEmail").innerText =
+email || "No Email";
+fetch(`/profile/${name}`)
+
+.then(res=>res.json())
+
+.then(data=>{
+
+if(data.length>0){
+
+document.getElementById(
+
+"followers"
+
+).innerText=
+
+data[0].followers || 0;
+
+}
+
+});
+
+
+async function loadMyPosts(){
+
+const response =
+await fetch("/posts");
+
+const posts =
+await response.json();
+
+const myPosts = posts.filter(post =>
+    post.username.toLowerCase() === name.toLowerCase()
+);
+
+const container =
+document.getElementById("myPosts");
+document.getElementById("totalPosts").innerText =
+"Posts : " + myPosts.length;
+
+myPosts.forEach(post => {
+
+container.innerHTML += `
+
+<div class="post-card">
+
+<h3>${post.username}</h3>
+
+<p>${post.content}</p>
+
+${post.image ? `<img src="${post.image}" class="post-image">` : ""}
+
+<p>❤️ Likes : ${post.likes}</p>
+
+</div>
+
+`;
+
+});
+
+}
+
+loadMyPosts();
+async function followUser(){
+
+const response=await fetch(
+
+`/follow/${name}`,
+
+{
+
+method:"PUT"
+
+}
+
+);
+
+const data=await response.json();
+
+if(data.success){
+
+document.getElementById(
+
+"followers"
+
+).innerText=data.followers;
+
+}
+
+}
+
+
+</script>
+
+</body>
+</html>

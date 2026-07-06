@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SocialConnect</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+
+    <h1>🌐 SocialConnect</h1>
+    <input
+type="text"
+id="search"
+placeholder="Search by username">
+
+<button onclick="searchPosts()">
+
+Search
+
+</button>
+
+    <nav>
+
+        <a href="index.html">Home</a>
+
+        <a href="register.html">Register</a>
+
+        <a href="login.html">Login</a>
+
+        <a href="profile.html">
+
+Profile
+
+</a>
+
+        <button id="logoutBtn" onclick="logoutUser()">
+
+            Logout
+
+        </button>
+        <button onclick="toggleDarkMode()">
+
+🌙
+
+</button>
+    </nav>
+
+</header>
+
+<main>
+
+    <section class="create-post">
+
+        <h2>Create Post</h2>
+
+        <input
+            type="text"
+            id="username"
+            placeholder="Enter Username">
+
+        <textarea
+            id="content"
+            placeholder="What's on your mind?"
+            rows="5"></textarea>
+
+        <button onclick="createPost()">
+
+            Post
+
+        </button>
+
+    </section>
+
+    <section>
+
+        <h2>Recent Posts</h2>
+
+        <div id="posts">
+
+        </div>
+
+    </section>
+
+</main>
+
+<script src="script.js"></script>
+
+</body>
+</html>
